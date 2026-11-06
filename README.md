@@ -111,7 +111,26 @@ dist/Awqat.app       Built app
 ```
 
 The checks cover the Umm al-Qura fixture, Hanbali Asr, Auto/Today/Daily overrides, after-midnight Isha, night markers following manual Fajr/Maghrib, Zawal stability, next-prayer rollover, settings validation, time parsing, and a polar-location fallback.
+## Installation (macOS)
 
+> **Cost:** Free & Open Source
+
+1. Download the latest release (`Awqat.app`) from the **Releases** tab.
+2. Drag `Awqat.app` into your `/Applications` folder (or launch it from `~/Downloads`).
+
+---
+
+### macOS Gatekeeper / "App is damaged" Fix
+
+Because **Awqat** is distributed directly from GitHub and not signed with an Apple Developer certificate, macOS Gatekeeper may flag or block it upon opening.
+
+To allow Awqat to run:
+
+1. Open **Terminal** (`Cmd + Space` → type `Terminal` → press `Enter`).
+2. Run this command to remove all quarantine and extended attributes:
+
+```bash
+xattr -cr /Applications/Awqat.app
 ## License
 
 App code is provided as-is for personal use. Adhan Swift is MIT licensed; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
