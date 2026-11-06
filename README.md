@@ -131,6 +131,7 @@ To allow Awqat to run:
 
 ```bash
 xattr -cr /Applications/Awqat.app
+```
 ## License
 
 App code is provided as-is for personal use. Adhan Swift is MIT licensed; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
