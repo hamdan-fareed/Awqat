@@ -50,7 +50,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func writeDiagnosticsIfRequested() {
-        guard let path = ProcessInfo.processInfo.environment["AWQAT_DIAGNOSTICS"] else { return }
+        guard let envPath = ProcessInfo.processInfo.environment["AWQAT_DIAGNOSTICS"] else { return }
+
+        // Security: Prevent path traversal by restricting diagnostics output to the temporary directory.
+        let filename = URL(fileURLWithPath: envPath).lastPathComponent
+        let safeName = filename.isEmpty || filename == "/" ? "awqat_diagnostics.txt" : filename
+        let safeURL = FileManager.default.temporaryDirectory.appendingPathComponent(safeName)
+
         let timeZone = model.settings.location?.timeZone ?? .current
         let lines = [
             "menuBarEnabled=\(model.settings.menuBar.isEnabled)",
@@ -61,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             "error=\(model.errorMessage ?? "none")",
             "next=\(model.next.map { "\($0.salah.displayName) \(TimeFormatting.timeString($0.time, timeZone: timeZone))" } ?? "none")"
         ]
-        try? lines.joined(separator: "\n").write(toFile: path, atomically: true, encoding: .utf8)
+        try? lines.joined(separator: "\n").write(to: safeURL, atomically: true, encoding: .utf8)
     }
 
     private func showMainWindow() {
