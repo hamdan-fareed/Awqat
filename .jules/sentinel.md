@@ -1,0 +1,4 @@
+## 2023-11-08 - Path Traversal Vulnerability in Diagnostics Writer
+**Vulnerability:** A path traversal vulnerability existed in `AppDelegate.swift`'s `writeDiagnosticsIfRequested` method. It read `AWQAT_DIAGNOSTICS` from the environment and used it directly as a path string in `write(toFile: path, atomically: true, encoding: .utf8)`. This meant if an attacker or script set this environment variable to an arbitrary absolute or relative path, arbitrary files could be overwritten.
+**Learning:** Even internal environment variables intended for debugging or local diagnostics should be treated as untrusted user input, as they can lead to arbitrary file overwrite or write.
+**Prevention:** We should avoid writing to unconstrained file paths supplied by environment variables. Instead, constrain the output to a safe directory like `FileManager.default.temporaryDirectory` and only use the `lastPathComponent` of any user-supplied path to prevent directory traversal.
