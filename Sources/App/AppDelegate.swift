@@ -46,9 +46,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func refreshAll() {
         mainWindowController.render(model: model)
         statusItemController.refresh()
+        #if DEBUG
         writeDiagnosticsIfRequested()
+        #endif
     }
 
+    #if DEBUG
     private func writeDiagnosticsIfRequested() {
         guard let path = ProcessInfo.processInfo.environment["AWQAT_DIAGNOSTICS"] else { return }
         let timeZone = model.settings.location?.timeZone ?? .current
@@ -63,6 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ]
         try? lines.joined(separator: "\n").write(toFile: path, atomically: true, encoding: .utf8)
     }
+    #endif
 
     private func showMainWindow() {
         guard let window = mainWindowController.window else { return }
