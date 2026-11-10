@@ -1,0 +1,4 @@
+## 2024-05-17 - [CRITICAL] Arbitrary File Write via Environment Variable
+**Vulnerability:** The application used `ProcessInfo.processInfo.environment["AWQAT_DIAGNOSTICS"]` to determine a file path and subsequently wrote internal app state (diagnostics) to that path without any validation or sanitization.
+**Learning:** Even desktop applications reading environment variables are susceptible to arbitrary file write / path traversal if the environment can be controlled by an attacker or another process. This could allow overwriting critical system files or dropping malicious payloads.
+**Prevention:** Avoid writing to paths specified by environment variables. If diagnostic logging is needed, write to a designated, safe application data directory (like `~/Library/Logs/Awqat/`) or use system logging facilities (like `os_log`).
