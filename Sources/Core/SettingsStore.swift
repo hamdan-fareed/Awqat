@@ -41,6 +41,9 @@ enum SettingsValidation {
         var errors: [String] = []
 
         if let location = settings.location {
+            if location.label.count > 100 {
+                errors.append("Location label must be 100 characters or fewer.")
+            }
             if !location.latitude.isFinite || location.latitude < -90 || location.latitude > 90 {
                 errors.append("Latitude must be between -90 and 90.")
             }
