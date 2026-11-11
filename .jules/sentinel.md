@@ -1,0 +1,4 @@
+## 2024-05-18 - [Rejected security change for environment variable]
+**Vulnerability:** Attempted to restrict a diagnostic file path specified by an environment variable (`AWQAT_DIAGNOSTICS`).
+**Learning:** In a local desktop application, environment variables are supplied by the user who is launching the app. Therefore, an environment variable dictating a file path for diagnostics is a legitimate developer feature, not an arbitrary file write vulnerability, because the user already possesses the privileges of the executing process. Restricting it breaks usability and is considered security theater.
+**Prevention:** Always evaluate the trust boundary. For local apps, features controlled by user-supplied environment variables are generally within the same trust domain and do not constitute a vulnerability unless they allow privilege escalation.
